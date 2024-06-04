@@ -4,6 +4,8 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
+    "@stimulus-components/animated-number": "^5.0.0",
+    "@stimulus-components/dropdown": "^3.0.0",
     "@stimulus-components/rails-nested-form": "^5.0.0",
     "esbuild": "^0.21.4"
   },

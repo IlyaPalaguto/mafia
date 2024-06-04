@@ -14,12 +14,16 @@
     </div>
   <% end %>
 
-  <div data-controller="game-options">
-    <div class="option-fields hidden" data-game-options-target="option-fields">
+  <div data-controller="dropdown" class="relative">
+    <button type="button" data-action="dropdown#toggle click@window->dropdown#hide">Options</button>
+
+    <div
+      data-dropdown-target="menu"
+      class="hidden"
+    >
       <%= form.label :discussion_time %>
       <%= form.number_field :discussion_time %>
     </div>
-    <%= button_to "Settings", type: "button", data: { action: "click->game-options#toggle:prevent" } %>
   </div>
 
   <template data-nested-form-target="template">

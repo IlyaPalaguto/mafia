@@ -10,5 +10,8 @@ application.register("hello", HelloController)
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)
 
-import OptionFieldsController from "./option_fields_controller"
-application.register("option-fields", OptionFieldsController)
+import AnimatedNumber from "@stimulus-components/animated-number"
+application.register("animated-number", AnimatedNumber)
+
+import Dropdown from "@stimulus-components/dropdown"
+application.register("dropdown", Dropdown)
