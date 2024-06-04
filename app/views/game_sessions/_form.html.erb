@@ -1,4 +1,7 @@
-<%= form_with(model: game_session) do |form| %>
+<%= form_with(model: game_session, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: ".nested-form-wrapper"
+}) do |form| %>
   <% if game_session.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(game_session.errors.count, "error") %> prohibited this game_session from being saved:</h2>
@@ -11,12 +14,28 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div data-controller="game-options">
+    <div class="option-fields hidden" data-game-options-target="option-fields">
+      <%= form.label :discussion_time %>
+      <%= form.number_field :discussion_time %>
+    </div>
+    <%= button_to "Settings", type: "button", data: { action: "click->game-options#toggle:prevent" } %>
   </div>
 
+  <template data-nested-form-target="template">
+    <%= form.fields_for :players, Player.new, child_index: 'NEW_RECORD' do |player_fields| %>
+      <%= render "players/form", f: player_fields %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :players do |player_fields| %>
+    <%= render "players/form", f: player_fields %>
+  <% end %>
+
+  <div data-nested-form-target="target"></div>
+  <button type="button" data-action="nested-form#add">Add player</button>
+
   <div>
-    <%= form.submit %>
+    <%= form.submit "Start game" %>
   </div>
 <% end %>

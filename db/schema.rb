@@ -10,14 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_04_092939) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_04_102531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "game_sessions", force: :cascade do |t|
     t.string "title"
+    t.integer "discussion_time", default: 60
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "players", force: :cascade do |t|
+    t.string "name"
+    t.bigint "game_session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_players_on_game_session_id"
+  end
+
+  add_foreign_key "players", "game_sessions"
 end
