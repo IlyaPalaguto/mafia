@@ -9,7 +9,7 @@ class GameSessionsController < ApplicationController
   end
 
   def create
-    @game_session = GameSession.new(game_session_params)
+    @game_session = PrepareGameSessionService.new.call(game_session_params)
 
     respond_to do |format|
       if @game_session.save
