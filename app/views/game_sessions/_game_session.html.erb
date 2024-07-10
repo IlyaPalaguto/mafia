@@ -4,4 +4,7 @@
     <%= game_session.title %>
   </p>
 
+  <div class="players">
+    <%= render partial: "players/player", collection: game_session.players %>
+  </div>
 </div>

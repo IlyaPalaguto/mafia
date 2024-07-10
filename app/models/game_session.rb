@@ -1,11 +1,11 @@
 class GameSession < ApplicationRecord
   class RolesSerializer
     def self.load(val)
-      val.map(&:constantize).map(&:new) if val
+      Array.wrap(val).map(&:constantize) if val
     end
 
     def self.dump(obj)
-      obj.map { |r| r.is_a?(Role) ? r.class.name : r.name }
+      Array.wrap(obj).map(&:name)
     end
   end
 

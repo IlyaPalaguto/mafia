@@ -1,7 +1,10 @@
 class PrepareGameSessionService
   def call(params)
     game_session = GameSession.new(params)
-    game_session.roles = select_roles(game_session.players.count)
+    game_session.roles = select_roles(game_session.players.size)
+    assigns_roles_to_players(game_session)
+
+    game_session
   end
 
   private
@@ -18,5 +21,10 @@ class PrepareGameSessionService
     roles << Role::Neutral.select_roles(neutral_roles_count)
 
     roles.flatten
+  end
+
+  def assigns_roles_to_players(game_session)
+    roles = game_session.roles.shuffle
+    game_session.players.each { |player| player.role = roles.pop }
   end
 end
