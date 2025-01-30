@@ -5,6 +5,18 @@ module Role
     end
   end
 
+  def name
+    self.class.name.split('::').last
+  end
+
+  def fraction
+    self.class.name.split('::').second
+  end
+
+  def description
+    "Должно быть описание в сабклассах каждой роли"
+  end
+
   def ability
     raise NotImplementedError, "This method should be implemented in subclasses"
   end

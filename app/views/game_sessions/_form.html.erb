@@ -1,45 +1,47 @@
-<%= form_with(model: game_session, data: {
-  controller: "nested-form",
-  nested_form_wrapper_selector_value: ".nested-form-wrapper"
-}) do |form| %>
-  <% if game_session.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(game_session.errors.count, "error") %> prohibited this game_session from being saved:</h2>
+<div class="player-form">
+  <%= form_with(model: game_session, data: {
+    controller: "nested-form",
+    nested_form_wrapper_selector_value: ".nested-form-wrapper"
+  }) do |form| %>
+    <% if game_session.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(game_session.errors.count, "error") %> prohibited this game_session from being saved:</h2>
 
-      <ul>
-        <% game_session.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% game_session.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div data-controller="dropdown" class="relative">
+      <button type="button" data-action="dropdown#toggle click@window->dropdown#hide">Options</button>
+
+      <div
+        data-dropdown-target="menu"
+        class="hidden"
+      >
+        <%= form.label :discussion_time %>
+        <%= form.number_field :discussion_time %>
+      </div>
     </div>
-  <% end %>
 
-  <div data-controller="dropdown" class="relative">
-    <button type="button" data-action="dropdown#toggle click@window->dropdown#hide">Options</button>
+    <template data-nested-form-target="template">
+      <%= form.fields_for :players, Player.new, child_index: 'NEW_RECORD' do |player_fields| %>
+        <%= render "players/form", f: player_fields %>
+      <% end %>
+    </template>
 
-    <div
-      data-dropdown-target="menu"
-      class="hidden"
-    >
-      <%= form.label :discussion_time %>
-      <%= form.number_field :discussion_time %>
-    </div>
-  </div>
-
-  <template data-nested-form-target="template">
-    <%= form.fields_for :players, Player.new, child_index: 'NEW_RECORD' do |player_fields| %>
+    <%= form.fields_for :players do |player_fields| %>
       <%= render "players/form", f: player_fields %>
     <% end %>
-  </template>
 
-  <%= form.fields_for :players do |player_fields| %>
-    <%= render "players/form", f: player_fields %>
+    <div data-nested-form-target="target"></div>
+
+    <div class="controls">
+      <button type="button" data-action="nested-form#add">Add player</button>
+      <%= form.submit "Start game", class: "start-btn" %>
+    </div>
   <% end %>
-
-  <div data-nested-form-target="target"></div>
-  <button type="button" data-action="nested-form#add">Add player</button>
-
-  <div>
-    <%= form.submit "Start game" %>
-  </div>
-<% end %>
+</div>
