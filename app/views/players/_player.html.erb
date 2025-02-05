@@ -1,5 +1,7 @@
-<div>
-  <%= player.role.new.name %>
-  <%= player.role.new.fraction %>
-  <%= player.name %>
+<div class="player-card">
+  <div class="player-avatar">
+    <span><%= player.name.first.upcase %></span>
+  </div>
+  <h2 class="player-name"><%= player.name %></h2>
+  <%= yield if block_given? %>
 </div>

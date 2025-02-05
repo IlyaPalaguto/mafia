@@ -1,0 +1,90 @@
+.timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7.5rem;
+    height: 7.5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.timer-circle {
+    position: relative;
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.progress-ring-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 6;
+}
+
+.progress-ring {
+    fill: none;
+    stroke: #ff4757;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 1;
+}
+
+.timer-content span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+.timer-content svg {
+    width: 3.125rem;
+    height: 3.125rem;
+    fill: white;
+}
+
+.stop-timer-button {
+    padding: 0.9375rem 1.5625rem;
+    background: #369743;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.stop-timer-button:hover {
+    background: #2c8237;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.stop-timer-button:active {
+    background: #267230;
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}

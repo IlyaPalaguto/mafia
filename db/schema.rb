@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_082310) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_31_173447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,5 +31,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_082310) do
     t.index ["game_session_id"], name: "index_players_on_game_session_id"
   end
 
+  create_table "players_vote_candidates", id: false, force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "vote_candidate_id", null: false
+    t.index ["player_id", "vote_candidate_id"], name: "idx_on_player_id_vote_candidate_id_ce545f05d3"
+  end
+
+  create_table "vote_candidates", force: :cascade do |t|
+    t.bigint "vote_id", null: false
+    t.bigint "candidate_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidate_id"], name: "index_vote_candidates_on_candidate_id"
+    t.index ["vote_id"], name: "index_vote_candidates_on_vote_id"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.bigint "game_session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_votes_on_game_session_id"
+  end
+
   add_foreign_key "players", "game_sessions"
+  add_foreign_key "vote_candidates", "players", column: "candidate_id"
+  add_foreign_key "vote_candidates", "votes"
+  add_foreign_key "votes", "game_sessions"
 end

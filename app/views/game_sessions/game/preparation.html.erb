@@ -1,17 +1,11 @@
-<h1>Prepare Game Session</h1>
+<h1>Подготовка к игре</h1>
 <h2>Игроки:</h2>
-<div id="playersList" class="players-list">
-  <% @players.each do |player| %>
-    <div class="player-card">
-      <div class="player-name">
-        <%= player.name %>
-      </div>
-    </div>
-  <% end %>
+<div class="players-list">
+  <%= render partial: "players/player", collection: @players %>
 </div>
 
 <h2>Роли:</h2>
 <div class="roles-list">
   <%= render partial: "roles/role", collection: @roles %>
 </div>
-<%= link_to 'Continue', next_wizard_path %>
+<%= link_to 'Продролжить', next_wizard_path, class: "button-secondary" %>

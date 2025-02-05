@@ -10,8 +10,17 @@ application.register("hello", HelloController)
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)
 
-import AnimatedNumber from "@stimulus-components/animated-number"
+import AnimatedNumber from "./animated_number_controller"
 application.register("animated-number", AnimatedNumber)
 
 import Dropdown from "@stimulus-components/dropdown"
 application.register("dropdown", Dropdown)
+
+import TimerController from "./timer_controller";
+application.register("timer", TimerController);
+
+import VoteController from "./vote_controller";
+application.register("vote", VoteController);
+
+import SpeakingController from "./speaking_controller";
+application.register("speaking", SpeakingController);

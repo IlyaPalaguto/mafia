@@ -10,6 +10,8 @@ class GameSession < ApplicationRecord
   end
 
   has_many :players, dependent: :destroy
+  has_many :votes
+
   accepts_nested_attributes_for :players, allow_destroy: true, reject_if: :all_blank
 
   serialize :roles, coder: RolesSerializer

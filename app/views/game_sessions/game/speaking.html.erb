@@ -1,0 +1,20 @@
+<div data-controller="speaking">
+  <h1>Стадия обсуждений</h1>
+
+  <div class="active-player-card" data-speaking-target="activePlayer">
+    <%= render "players/player", player: @players.first do %>
+
+      <p class="player-status">Говорит сейчас</p>
+
+      <%= render_timer duration: @game_session.discussion_time,
+                        on_complete: "speaking#nextPlayer",
+                        stop_button_title: "Следующий игрок" %>
+    <% end %>
+  </div>
+
+  <div class="waiting-players" data-speaking-target="waitingPlayers">
+    <%= render partial: "players/player", collection: @players.drop(1) %>
+  </div>
+
+  <%= link_to "Перейти к голосованию", next_wizard_path, class: "button-secondary"%>
+</div>

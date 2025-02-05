@@ -1,0 +1,7 @@
+<% speaking = nil %>
+<div class="player-card <%= 'active' if speaking %>">
+  <div class="player-avatar">
+    <span><%= player.name.first.upcase %></span>
+  </div>
+  <p class="player-name"><%= player.name %></p>
+</div>
