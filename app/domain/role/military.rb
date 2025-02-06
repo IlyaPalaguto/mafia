@@ -15,5 +15,11 @@ module Role
       Role::Military::Sheriff,
       Role::Military::Gravedigger
     ]
+
+    def win_condition
+      game_session.players.alive.all?(&:military?)
+    end
+
+    def military?; true; end
   end
 end

@@ -15,5 +15,7 @@ module Role
       Role::Neutral::Scammer,
       Role::Neutral::Quieted
     ]
+
+    def neutral?; true; end
   end
 end

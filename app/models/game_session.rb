@@ -10,7 +10,7 @@ class GameSession < ApplicationRecord
   end
 
   has_many :players, dependent: :destroy
-  has_many :votes
+  has_many :votes, dependent: :destroy
 
   accepts_nested_attributes_for :players, allow_destroy: true, reject_if: :all_blank
 

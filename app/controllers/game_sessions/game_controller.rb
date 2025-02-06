@@ -9,15 +9,14 @@ class GameSessions::GameController < ApplicationController
     case step
     when :preparation
       @players = @game_session.players
-      @roles = @game_session.roles.map(&:new)
+      @roles = @players.map(&:role)
+      # @roles = @game_session.roles.map(&:new)
     when :speaking
-      @vote = @game_session.votes.build
       @players = @game_session.players
     when :vote
       @vote = @game_session.votes.build
       @players = @game_session.players
     when :night
-      @opts = session[:opts]
     end
     render_wizard
   end
@@ -25,12 +24,10 @@ class GameSessions::GameController < ApplicationController
   def update
     case step
     when :vote
-      byebug
       @vote = @game_session.votes.build(vote_params)
       if @vote.save
         # game_service.perform_vote(@vote)
       end
-      session[:opts] = params[:vote]
     when :night
 
     end

@@ -15,5 +15,11 @@ module Role
       Role::Mafia::Snitch,
       Role::Mafia::DirtyCop
     ]
+
+    def win_condition
+      !game_session.players.alive.any?(&:military?)
+    end
+
+    def mafia?; true; end
   end
 end
