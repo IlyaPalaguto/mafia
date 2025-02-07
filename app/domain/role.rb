@@ -1,16 +1,7 @@
-module Role
-  attr_reader :game_session, :player
+class Role
+  include ActiveModel::Model
 
-  module Selectable
-    def select_roles(quantity)
-      self::ROLES.sample(quantity)
-    end
-  end
-
-  def initialize(game_session=nil, player=nil)
-    @game_session = game_session
-    @player = player
-  end
+  attr_accessor :game_session, :player
 
   def name
     self.class.name.split('::').last
@@ -32,7 +23,7 @@ module Role
     raise NotImplementedError, "This method should be implemented in subclasses"
   end
 
-  def military?; false; end
+  def civilian?; false; end
   def mafia?; false; end
   def neutral?; false; end
 end

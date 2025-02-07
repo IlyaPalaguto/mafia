@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Role::Neutral::Quieted do
+RSpec.describe Roles::Neutrals::Quieted do
   subject { create(:player, role: described_class).role }
 
   describe "#win_condition" do

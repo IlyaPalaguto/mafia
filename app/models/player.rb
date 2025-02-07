@@ -9,14 +9,17 @@ class Player < ApplicationRecord
     end
   end
 
+  scope :alive, -> { where(alive: true) }
+  scope :dead, -> { where(alive: false) }
+
   belongs_to :game_session
   has_and_belongs_to_many :voted_candidates, class_name: "VoteCandidate", join_table: "players_vote_candidates"
 
   serialize :role, coder: RoleSerializer
 
-  delegate :military?, :mafia?, :neutral?, to: :role
+  delegate :civilian?, :mafia?, :neutral?, to: :role
 
   def role
-    super&.new(game_session, self)
+    super&.new(game_session:, player: self)
   end
 end

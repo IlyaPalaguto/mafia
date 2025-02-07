@@ -17,6 +17,7 @@ class GameSessions::GameController < ApplicationController
       @vote = @game_session.votes.build
       @players = @game_session.players
     when :night
+      @roles = @game_session.players.map(&:role)
     end
     render_wizard
   end
@@ -24,14 +25,10 @@ class GameSessions::GameController < ApplicationController
   def update
     case step
     when :vote
-      @vote = @game_session.votes.build(vote_params)
-      if @vote.save
-        # game_service.perform_vote(@vote)
-      end
+      @game_session.votes.create(vote_params)
     when :night
-
     end
-    render_wizard @game_session, context: @opts
+    render_wizard @game_session
   end
 
   private

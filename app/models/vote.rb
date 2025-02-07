@@ -1,5 +1,5 @@
 class Vote < ApplicationRecord
-  belongs_to :game_session
+  belongs_to :game_session, counter_cache: true
   has_many :vote_candidates, dependent: :destroy
   has_many :candidates, through: :vote_candidates
 

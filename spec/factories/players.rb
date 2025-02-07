@@ -5,15 +5,15 @@ FactoryBot.define do
     game_session
 
     trait :mafia do
-      sequence(:role, (Role::Mafia::ROLES).shuffle.cycle)
+      sequence(:role, Roles::Constants::MAFIA_ROLES.shuffle.cycle)
     end
 
-    trait :military do
-      sequence(:role, (Role::Military::ROLES).shuffle.cycle)
+    trait :civilian do
+      sequence(:role, Roles::Constants::CIVILIAN_ROLES.shuffle.cycle)
     end
 
     trait :neutral do
-      sequence(:role, (Role::Neutral::ROLES).shuffle.cycle)
+      sequence(:role, Roles::Constants::NEUTRAL_ROLES.shuffle.cycle)
     end
   end
 end

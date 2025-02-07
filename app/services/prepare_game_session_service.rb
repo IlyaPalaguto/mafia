@@ -10,15 +10,15 @@ class PrepareGameSessionService
   private
 
   def select_roles(players_count)
-    military_roles_count = players_count / 2
-    mafia_roles_count = (players_count - military_roles_count) / 2
-    neutral_roles_count = players_count - military_roles_count - mafia_roles_count
+    civilian_roles_count = players_count / 2
+    mafia_roles_count = (players_count - civilian_roles_count) / 2
+    neutral_roles_count = players_count - civilian_roles_count - mafia_roles_count
 
     roles = []
 
-    roles << Role::Mafia.select_roles(mafia_roles_count)
-    roles << Role::Military.select_roles(military_roles_count)
-    roles << Role::Neutral.select_roles(neutral_roles_count)
+    roles << Roles::Constants::MAFIA_ROLES.sample(mafia_roles_count)
+    roles << Roles::Constants::CIVILIAN_ROLES.sample(civilian_roles_count)
+    roles << Roles::Constants::NEUTRAL_ROLES.sample(neutral_roles_count)
 
     roles.flatten
   end
