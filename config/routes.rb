@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :game_sessions do
+    get :test_session, on: :collection
+
     resources :game, controller: "game_sessions/game"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

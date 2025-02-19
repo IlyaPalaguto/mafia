@@ -4,6 +4,33 @@ module Roles
 
       DAYS_WITHOUT_VOTE_REQUIRED = 3
 
+      def move_order
+        Constants::MOVE_ORDER[:NEUTRAL_KILLING_ROLES]
+      end
+
+      def use_ability(params)
+        if kill_actions.pending.exists? && params[:target_id].present?
+          action = kill_actions.pending.first
+          action.target_id = params[:target_id]
+          action.night = active_night
+
+          attempt_to_kill(action)
+        end
+      end
+
+      def check_ability
+        if !game_session.votes.last.vote_candidates.where(candidate: player).exists?
+          kill_actions.create
+        end
+        @check_ability = !shoots_count.zero?
+
+        super
+      end
+
+      def shoots_count
+        @shoots_count ||= kill_actions.pending.count
+      end
+
       def win_condition
         return false if game_session.votes.count < DAYS_WITHOUT_VOTE_REQUIRED
 

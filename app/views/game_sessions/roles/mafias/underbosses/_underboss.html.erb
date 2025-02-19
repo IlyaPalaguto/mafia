@@ -1,0 +1,12 @@
+<div class="form-card">
+  <%= form.collection_radio_buttons :target_id, underboss.game_session.players, :id, :name do |radio_button| %>
+    <div class="input-container">
+      <%= radio_button.radio_button class: "checkbox-hidden" %>
+      <div class="input-checkbox">
+        <%= radio_button.label class: "player-name" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= button_tag "Make Action", type: "submit", class: "button-secondary" %>

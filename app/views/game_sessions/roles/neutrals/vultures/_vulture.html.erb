@@ -1,0 +1,12 @@
+<div class="form-card">
+  <%= form.collection_check_boxes :target_ids, vulture.game_session.players, :id, :name do |check_box| %>
+    <div class="input-container">
+      <%= check_box.check_box class: "checkbox-hidden" %>
+      <div class="input-checkbox">
+        <%= check_box.label class: "player-name" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= button_tag "Make Action", type: "submit", class: "button-secondary" %>

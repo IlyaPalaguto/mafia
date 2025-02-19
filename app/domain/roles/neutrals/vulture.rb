@@ -4,8 +4,20 @@ module Roles
 
       REQUIRED_POINTS_FOR_VICTORY = 3
 
+      def use_ability(params)
+        select_actions.pending.includes(:target).each do |action|
+          action.target.alive? ? action.rejected! : action.approved!
+        end
+
+        params[:select_target_ids].each do |target_id|
+          select_actions.create(target_id:, night: active_night)
+        end
+
+        return nil
+      end
+
       def win_condition
-        Badges::VultureTag.where(player: game_session.players.dead).count >= REQUIRED_POINTS_FOR_VICTORY
+        select_actions.approved.count >= REQUIRED_POINTS_FOR_VICTORY
       end
     end
   end

@@ -5,7 +5,7 @@ class GameSessionsController < ApplicationController
   end
 
   def create
-    @game_session = PrepareGameSessionService.new.call(game_session_params)
+    @game_session = Game::Operations::PrepareGameSession.call(game_session_params)
 
     respond_to do |format|
       if @game_session.save
@@ -16,6 +16,16 @@ class GameSessionsController < ApplicationController
         format.json { render json: @game_session.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def test_session
+    game_session = GameSession.create
+
+    FactoryBot.create_list(:player, 3, :mafia, game_session:)
+    FactoryBot.create_list(:player, 3, :neutral, game_session:)
+    FactoryBot.create_list(:player, 6, :civilian, game_session:)
+
+    redirect_to game_session_game_path(game_session, id: :preparation)
   end
 
   private

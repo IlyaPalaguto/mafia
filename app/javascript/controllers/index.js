@@ -24,3 +24,6 @@ application.register("vote", VoteController);
 
 import SpeakingController from "./speaking_controller";
 application.register("speaking", SpeakingController);
+
+import DragAndDropController from "./drag_and_drop_controller";
+application.register("drag-and-drop", DragAndDropController);

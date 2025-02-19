@@ -4,14 +4,38 @@ module Roles
 
       EQUALISER_SINGLE_MAFIA = 1
 
-      def win_condition
-        alive_players = game_session.players.alive
+      def move_order
+        Constants::MOVE_ORDER[:NEUTRAL_KILLING_ROLES]
+      end
 
-        if alive_players.select(&:mafia?).size <= EQUALISER_SINGLE_MAFIA
-          alive_players.select(&:civilian?).size ==
-            (alive_players.select(&:neutral?) + alive_players.select(&:mafia?).size)
+      def use_ability(params)
+        target = players.find(params[:target])
+
+        if target.present? && target.is_a?(params[:guess].constantize)
+          guess_actions.create(target:, status: :approved, night: active_night)
+
+          action = kill_actions.create(target:, night: active_night)
+          attempt_to_kill(action)
         else
-          alive_players.select(&:civilian?).size == alive_players.select(&:mafia?).size
+          guess_actions.create(target:, status: :rejected, night: active_night)
+        end
+
+        return nil
+      end
+
+      def check_ability
+        @check_ability = guess_actions.last.approved?
+
+        super
+      end
+
+      def win_condition
+        alive_players = players.alive
+
+        if alive_players.mafias.count <= EQUALISER_SINGLE_MAFIA
+          alive_players.civilians.count == alive_players.neutrals.count + alive_players.mafias.count
+        else
+          alive_players.civilians.count == alive_players.mafias.count
         end
       end
     end

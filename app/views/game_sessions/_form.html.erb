@@ -4,7 +4,7 @@
 }) do |form| %>
   <div data-controller="dropdown">
     <div class="controls">
-      <%= button_tag "Настройки игры", type: "button", class: "button-secondary", data: { action: "dropdown#toggle click@window->dropdown#hid" } %>
+      <%= button_tag "Настройки игры", type: "button", class: "button-secondary", data: { action: "dropdown#toggle click@window->dropdown#hide" } %>
     </div>
 
     <div
@@ -32,5 +32,6 @@
   <div class="controls">
     <%= button_tag "Добавить игрока", type: "button", class: "button-primary", data: { action: "nested-form#add" } %>
     <%= button_tag "Начать игру", type: "submit", class: "button-secondary" %>
+    <%= link_to "Сгенерировать тестовую сессию", test_session_game_sessions_path, class: "button-secondary" %>
   </div>
 <% end %>

@@ -1,0 +1,17 @@
+<h1>The Night</h1>
+<%= turbo_frame_tag "action" do %>
+  <% if @action_result.present? %>
+    <%# render @action_result %>
+    <%= link_to "Понятно", wizard_path, class: "button-secondary" %>
+  <% else %>
+    <%= render partial: "roles/role", locals: { role: @player.role } %>
+
+    <%= form_with model: @player, url: game_session_game_path, method: :patch, class:  do |f| %>
+      <%= f.hidden_field :id %>
+
+      <%= f.fields_for :action_attributes do |form| %>
+        <%= render @player.role, form: %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

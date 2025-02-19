@@ -4,8 +4,23 @@ module Roles
 
       REQUIRED_TARGETS = 3
 
+      def use_ability(params)
+        select_actions.create(target: params[:target_id], night: active_night) unless select_actions.pending.exists?
+
+        return nil
+      end
+
+      def check_ability
+        select_actions.pending.first.target.dead?
+        select_actions.pending.update_all(status: :approved)
+
+        @check_ability = !select_actions.pending.exists?
+
+        super
+      end
+
       def win_condition
-        Badges::LunaticTag.where(player: game_session.players.dead).count >= REQUIRED_TARGETS
+        select_actions.approved.count >= REQUIRED_TARGETS
       end
     end
   end

@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_07_134033) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_14_051822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actions", force: :cascade do |t|
+    t.bigint "night_id"
+    t.string "actionable_type", null: false
+    t.bigint "actionable_id", null: false
+    t.bigint "target_id"
+    t.integer "status", default: 0
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actionable_type", "actionable_id"], name: "index_actions_on_actionable"
+    t.index ["night_id"], name: "index_actions_on_night_id"
+    t.index ["target_id"], name: "index_actions_on_target_id"
+  end
 
   create_table "game_sessions", force: :cascade do |t|
     t.string "title"
@@ -20,7 +34,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_07_134033) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "roles"
-    t.integer "votes_count"
+    t.integer "votes_count", default: 0, null: false
+  end
+
+  create_table "nights", force: :cascade do |t|
+    t.bigint "game_session_id", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_nights_on_game_session_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -29,7 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_07_134033) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role"
-    t.boolean "alive", default: true
+    t.integer "status", default: 0
     t.index ["game_session_id"], name: "index_players_on_game_session_id"
   end
 
@@ -55,6 +77,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_07_134033) do
     t.index ["game_session_id"], name: "index_votes_on_game_session_id"
   end
 
+  add_foreign_key "actions", "nights"
+  add_foreign_key "actions", "players", column: "target_id"
+  add_foreign_key "nights", "game_sessions"
   add_foreign_key "players", "game_sessions"
   add_foreign_key "vote_candidates", "players", column: "candidate_id"
   add_foreign_key "vote_candidates", "votes"

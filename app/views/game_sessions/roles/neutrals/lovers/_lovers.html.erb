@@ -1,0 +1,10 @@
+<%= form.collection_radio_buttons :success, array_to_guess, :role, :icon do |radio_button| %>
+  <div class="input-container">
+    <%= radio_button.radio_button %>
+    <div class="input-checkbox">
+      <%= radio_button.label %>
+    </div>
+  </div>
+<% end %>
+
+<%= button_tag "Make Action", type: "submit", class: "button-secondary" %>

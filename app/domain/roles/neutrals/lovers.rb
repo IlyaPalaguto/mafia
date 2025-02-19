@@ -6,13 +6,33 @@ module Roles
 
       REQUIRED_INVIULNERABILITY_ACTIVATIONS = 3
 
+      def move_order
+        Constants::MOVE_ORDER[:SAVING_ROLES]
+      end
+
+      def use_ability(params)
+        status = params[:success] ? :pending : :rejected
+
+        lovers.each { _1.save_actions.create(target: _1, status:, night: active_night) }
+      end
+
+      def check_ability
+        # Нужно додумать
+        lovers.joins(:voted_candidates)
+
+        super
+      end
+
       def win_condition
-        lovers = game_session.players.where(role: self.class)
+        return true if players.count <= MIN_PLAYERS_FOR_VICTORY
 
-        # Как то так наверно
-        return true if game_session.players.count <= MIN_PLAYERS_FOR_VICTORY
+        Actions::Kill.where(target: lovers, status: :rejected).count >= REQUIRED_INVIULNERABILITY_ACTIVATIONS
+      end
 
-        Badges::AvoidMurder.where(player: lovers).count >= REQUIRED_INVIULNERABILITY_ACTIVATIONS
+      private
+
+      def lovers
+        @lovers ||= players.where(role: self.class)
       end
     end
   end

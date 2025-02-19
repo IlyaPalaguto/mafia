@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :player do
-    name { Faker::Name.first_name }
+    name { Faker::Name.with_locale("ru") { Faker::Name.first_name } }
 
     game_session
 
